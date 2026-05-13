@@ -1,0 +1,21 @@
+{%extends 'mainapp/main.html' %}
+
+{% block content %}
+    <a href="{% url 'contact' %}">Contacts</a>
+    Today: {{ current_date | date:"d-m-Y" }}
+    {% if user%}
+        <p>Lista de filme pentru {{ user }}</p>
+
+        <ol>
+            {% for film in filme %}
+                <li>{{ film }}</li>
+            {% endfor %}
+        </ol>
+    {%else%}
+        <p>Nu va cunosc , nu stiu</p>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+Copyright Paco
+{% endblock %}
