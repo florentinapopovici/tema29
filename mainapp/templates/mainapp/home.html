@@ -1,21 +1,67 @@
-{%extends 'mainapp/main.html' %}
+{% extends 'mainapp/main.html' %}
+{% load static %}
 
 {% block content %}
-    <a href="{% url 'contact' %}">Contacts</a>
-    Today: {{ current_date | date:"d-m-Y" }}
-    {% if user%}
-        <p>Lista de filme pentru {{ user }}</p>
 
-        <ol>
-            {% for film in filme %}
-                <li>{{ film }}</li>
-            {% endfor %}
-        </ol>
-    {%else%}
-        <p>Nu va cunosc , nu stiu</p>
-    {% endif %}
+{% if user %}
+
+<img src="{% static 'img/moviesicon.png' %}" width="150"/>
+
+<h3>Lista de filme pentru {{ user }}</h3>
+
+<div class="container">
+
+    <div class="row fw-bold border-bottom py-2">
+        <div class="col-3">Titlu</div>
+        <div class="col-6">Descriere</div>
+        <div class="col-3">Data</div>
+    </div>
+
+    {% for film in filme %}
+    <div class="row border-bottom py-2">
+        <div class="col-3">
+            <a href="{% url 'details' film.id %}">{{ film.title }}</a>
+        </div>
+        <div class="col-6">{{ film.description }}</div>
+        <div class="col-3">{{ film.release_date }}</div>
+    </div>
+    {% endfor %}
+
+</div>
+
+<img src="{% static 'img/books.png' %}" width="150"/>
+<h3 class="mt-4">Lista de carti pentru {{ user }}</h3>
+
+<div class="container">
+
+    <div class="row fw-bold border-bottom py-2">
+        <div class="col-3">Titlu</div>
+        <div class="col-3">Autor</div>
+        <div class="col-2">Pagini</div>
+        <div class="col-2">Created</div>
+        <div class="col-2">Modified</div>
+    </div>
+
+    {% for book in books %}
+    <div class="row border-bottom py-2">
+        <div class="col-3">
+            <a href="{% url 'book' book.id %}">{{ book.title }}</a>
+        </div>
+        <div class="col-3">{{ book.author }}</div>
+        <div class="col-2">{{ book.pages }}</div>
+        <div class="col-2">{{ book.create_date }}</div>
+        <div class="col-2">{{ book.modify_date }}</div>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% else %}
+<p>Nu va cunosc, nu stiu</p>
+{% endif %}
+
 {% endblock %}
 
 {% block footer %}
-Copyright Paco
+Copyright HelloWorld
 {% endblock %}
